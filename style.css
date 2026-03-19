@@ -180,6 +180,9 @@ button { cursor: pointer; font-family: var(--font-body); }
 .hero-address:hover { opacity: 0.85; }
 
 @media (max-width: 768px) {
+  .hero {
+    padding: 1.5rem 0 !important;
+  }
   .hero-right {
     padding-right: 12px;
     box-sizing: border-box;
