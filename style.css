@@ -183,14 +183,20 @@ button { cursor: pointer; font-family: var(--font-body); }
   .hero         { padding: 0.5rem 0 !important; }
   .hero-mascot  { width: 65px !important; height: auto !important; margin-right: 0 !important; }
   .hero-divider { min-height: 55px !important; align-self: center !important; }
-  .hero-right   { padding-left: 0.75rem !important; }
 
-  .t-el         { font-size: 2.4rem !important; }
-  .t-bueno      { font-size: 2.4rem !important; }
+  .hero-right   {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
 
-  .open-badge   { font-size: 0.52rem !important; padding: 2px 6px !important; }
-  .hero-hours   { font-size: 0.52rem !important; padding: 2px 6px !important; }
-  .hero-address { font-size: 0.52rem !important; padding: 2px 6px !important; }
+  span.t-el     { font-size: 36px !important; line-height: 1 !important; }
+  span.t-bueno  { font-size: 36px !important; line-height: 1 !important; }
+
+  .open-badge   { font-size: 9px !important; padding: 2px 6px !important; }
+  .hero-hours   { font-size: 9px !important; padding: 2px 6px !important; }
+  .hero-address { font-size: 9px !important; padding: 2px 6px !important; }
 }
 
 /* ===== FOOD BAND ===== */
