@@ -215,7 +215,8 @@ button { cursor: pointer; font-family: var(--font-body); }
     margin: 0 !important;
   }
   .t-el, .t-bueno {
-    font-size: 36px !important;
+    font-size: 64px !important;
+    font-weight: 900 !important;
   }
   .hero-meta {
     justify-content: center !important;
@@ -247,8 +248,8 @@ button { cursor: pointer; font-family: var(--font-body); }
     align-items: center !important;
   }
   .nav-link {
-    font-size: 13px;
-    padding: 0 0.6rem;
+    font-size: 11px;
+    padding: 0 0.4rem;
   }
 }
 
@@ -362,7 +363,7 @@ button { cursor: pointer; font-family: var(--font-body); }
 .cart-nav-btn:active { transform: scale(0.96); }
 
 .cart-count {
-  background: var(--white);
+  background: #f0eedc;
   color: var(--orange);
   border-radius: 50%;
   width: 20px;
@@ -1061,7 +1062,7 @@ button { cursor: pointer; font-family: var(--font-body); }
   position: fixed;
   top: 0; right: 0; bottom: 0;
   width: min(400px, 100vw);
-  background: var(--white);
+  background: #f0eedc;
   z-index: 400;
   display: flex;
   flex-direction: column;
@@ -1074,7 +1075,7 @@ button { cursor: pointer; font-family: var(--font-body); }
 
 .cart-header {
   background: var(--black);
-  color: var(--white);
+  color: #f0eedc;
   padding: 1.25rem 1.5rem;
   display: flex;
   align-items: center;
@@ -1108,7 +1109,7 @@ button { cursor: pointer; font-family: var(--font-body); }
   flex: 1;
   overflow-y: auto;
   padding: 1rem;
-  background-color: #ffffff;
+  background-color: #f0eedc;
 }
 
 .cart-empty-state {
