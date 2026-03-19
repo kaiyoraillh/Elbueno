@@ -24,7 +24,7 @@
 html { scroll-behavior: smooth; }
 body {
   font-family: var(--font-body);
-  background: var(--white);
+  background: #f0eedc;
   color: var(--black);
   min-height: 100vh;
 }
@@ -183,6 +183,21 @@ button { cursor: pointer; font-family: var(--font-body); }
   .hero-right {
     padding-right: 12px;
     box-sizing: border-box;
+    overflow: hidden;
+    max-width: 100%;
+  }
+  .t-el, .t-bueno {
+    font-size: 2.4rem !important;
+  }
+  .open-badge,
+  .hero-hours,
+  .hero-address {
+    font-size: 0.6rem !important;
+    padding: 2px 7px !important;
+  }
+  .nav-link {
+    font-size: 13px;
+    padding: 0 0.6rem;
   }
 }
 
