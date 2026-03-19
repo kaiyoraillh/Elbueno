@@ -181,28 +181,65 @@ button { cursor: pointer; font-family: var(--font-body); }
 
 @media (max-width: 768px) {
   .hero {
-    padding: 2.5rem 0 !important;
-    min-height: 320px !important;
+    padding: 1.8rem 0 !important;
+    min-height: unset !important;
+  }
+  .hero-content {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+    width: 100% !important;
+  }
+  .hero-mascot {
+    justify-self: unset !important;
+    margin-right: 0 !important;
+    width: 90px !important;
+  }
+  .hero-divider {
+    display: none !important;
   }
   .hero-right {
-    padding-right: 12px;
-    box-sizing: border-box;
-    overflow: hidden;
-    max-width: 100%;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    gap: 0.4rem !important;
+  }
+  .hero-title {
+    justify-content: center !important;
+    margin: 0 !important;
   }
   .t-el, .t-bueno {
-    font-size: 2.4rem !important;
+    font-size: 3rem !important;
+  }
+  .hero-meta {
+    justify-content: center !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 0.35rem !important;
   }
   .open-badge,
-  .hero-hours,
-  .hero-address {
-    font-size: 15px !important;
-    padding: 10px 16px !important;
-    min-height: 40px !important;
+  .hero-hours {
+    font-size: 13px !important;
+    padding: 6px 16px !important;
     white-space: nowrap !important;
     width: auto !important;
     display: inline-flex !important;
     align-items: center !important;
+  }
+  .hero-address {
+    font-size: 12px !important;
+    padding: 6px 16px !important;
+    white-space: nowrap !important;
+    max-width: 90% !important;
+    width: auto !important;
+    margin: 0 auto !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    box-sizing: border-box !important;
   }
   .nav-link {
     font-size: 13px;
