@@ -181,7 +181,8 @@ button { cursor: pointer; font-family: var(--font-body); }
 
 @media (max-width: 768px) {
   .hero {
-    padding: 1.5rem 0 !important;
+    padding: 2.5rem 0 !important;
+    min-height: 320px !important;
   }
   .hero-right {
     padding-right: 12px;
@@ -195,8 +196,13 @@ button { cursor: pointer; font-family: var(--font-body); }
   .open-badge,
   .hero-hours,
   .hero-address {
-    font-size: 0.6rem !important;
-    padding: 2px 7px !important;
+    font-size: 15px !important;
+    padding: 10px 16px !important;
+    min-height: 40px !important;
+    white-space: nowrap !important;
+    width: auto !important;
+    display: inline-flex !important;
+    align-items: center !important;
   }
   .nav-link {
     font-size: 13px;
