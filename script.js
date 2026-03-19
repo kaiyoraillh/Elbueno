@@ -89,6 +89,7 @@ const MENU = {
     { id: 'pote-cheddar', name: 'Pote de Cheddar',       price: 3000 },
     { id: 'panceta',      name: 'Panceta',               price: 1500 },
     { id: 'pepinos',      name: 'Pepinos Agridulces',    price: 500  },
+    { id: 'veggie',       name: 'Opción Veggie',         price: 0, note: 'consultar' },
   ],
 };
 
@@ -116,29 +117,11 @@ function renderBurgers() {
       </div>
       <h3 class="burger-name">${b.name}</h3>
       <p class="burger-desc">${b.desc}</p>
-      <div class="size-selector" id="sizes-${b.id}">
-        ${Object.entries(b.prices).map(([size, price], i) => `
-          <button class="size-btn${i === 0 ? ' active' : ''}" data-size="${size}">
-            ${SIZES[size]}<span class="size-price">${fmt(price)}</span>
-          </button>
-        `).join('')}
-      </div>
-      <button class="add-to-cart-btn" id="addbtn-${b.id}" onclick="addBurger('${b.id}')">
+      <button class="add-to-cart-btn" id="addbtn-${b.id}" onclick="openBurgerModal('${b.id}')">
         ＋ AGREGAR AL PEDIDO
       </button>
     </div>
   `).join('');
-
-  // Wire up size selectors
-  MENU.burgers.forEach(b => {
-    const selector = $(`sizes-${b.id}`);
-    selector.querySelectorAll('.size-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        selector.querySelectorAll('.size-btn').forEach(x => x.classList.remove('active'));
-        btn.classList.add('active');
-      });
-    });
-  });
 }
 
 function renderItems(containerId, items, type) {
@@ -161,31 +144,108 @@ function renderItems(containerId, items, type) {
 
 function renderMenu() {
   renderBurgers();
-  renderItems('papas-list',      MENU.papas,      'papas');
-  renderItems('bebidas-list',    MENU.bebidas,    'bebidas');
-  renderItems('adicionales-list', MENU.adicionales, 'adicionales');
+  renderItems('papas-list',   MENU.papas,   'papas');
+  renderItems('bebidas-list', MENU.bebidas, 'bebidas');
 }
 
-// ===== CART LOGIC =====
+// ===== BURGER MODAL =====
 
-function addBurger(burgerId) {
-  const selector = $(`sizes-${burgerId}`);
-  const activeBtn = selector.querySelector('.size-btn.active');
-  const size = activeBtn.dataset.size;
+let currentModalBurgerId = null;
+
+function openBurgerModal(burgerId) {
+  currentModalBurgerId = burgerId;
   const burger = MENU.burgers.find(b => b.id === burgerId);
-  const price = burger.prices[size];
-  const cartId = `${burgerId}-${size}`;
+
+  $('burger-modal-img').src = burger.image || '';
+  $('burger-modal-img').style.display = burger.image ? 'block' : 'none';
+  $('burger-modal-name').textContent = burger.name;
+  $('burger-modal-desc').textContent = burger.desc;
+
+  $('modal-sizes').innerHTML = Object.entries(burger.prices).map(([size, price], i) => `
+    <label class="modal-size-option${i === 0 ? ' selected' : ''}">
+      <input type="radio" name="modal-size" value="${size}" ${i === 0 ? 'checked' : ''}>
+      <span class="modal-size-label">${SIZES[size]}</span>
+      <span class="modal-size-price">${fmt(price)}</span>
+    </label>
+  `).join('');
+
+  $('modal-adicionales').innerHTML = MENU.adicionales.map(a => `
+    <label class="modal-adicional-option">
+      <input type="checkbox" name="modal-adicional" value="${a.id}">
+      <span class="modal-adicional-name">${a.name}</span>
+      <span class="modal-adicional-price">${a.note ? a.note : '+' + fmt(a.price)}</span>
+    </label>
+  `).join('');
+
+  $('modal-sizes').querySelectorAll('input[type="radio"]').forEach(input => {
+    input.addEventListener('change', () => {
+      $('modal-sizes').querySelectorAll('.modal-size-option').forEach(l =>
+        l.classList.toggle('selected', l.querySelector('input').checked)
+      );
+      updateModalTotal();
+    });
+  });
+  $('modal-adicionales').querySelectorAll('input[type="checkbox"]').forEach(input => {
+    input.addEventListener('change', updateModalTotal);
+  });
+
+  updateModalTotal();
+  $('burger-modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function updateModalTotal() {
+  const burger = MENU.burgers.find(b => b.id === currentModalBurgerId);
+  const selectedSize = $('modal-sizes').querySelector('input[type="radio"]:checked');
+  const size = selectedSize ? selectedSize.value : 'simple';
+  const basePrice = burger.prices[size];
+
+  const adicionalesTotal = [...$('modal-adicionales').querySelectorAll('input[type="checkbox"]:checked')]
+    .reduce((sum, input) => {
+      const a = MENU.adicionales.find(x => x.id === input.value);
+      return sum + (a ? a.price : 0);
+    }, 0);
+
+  $('modal-total').textContent = fmt(basePrice + adicionalesTotal);
+}
+
+function addFromModal() {
+  const burger = MENU.burgers.find(b => b.id === currentModalBurgerId);
+  const selectedSize = $('modal-sizes').querySelector('input[type="radio"]:checked');
+  const size = selectedSize ? selectedSize.value : 'simple';
+  const basePrice = burger.prices[size];
+
+  const selectedAdicionales = [...$('modal-adicionales').querySelectorAll('input[type="checkbox"]:checked')]
+    .map(input => MENU.adicionales.find(a => a.id === input.value))
+    .filter(Boolean);
+
+  const adicionalesTotal = selectedAdicionales.reduce((sum, a) => sum + a.price, 0);
+  const totalPrice = basePrice + adicionalesTotal;
+
+  const addonIds = selectedAdicionales.map(a => a.id).sort().join('-');
+  const cartId = addonIds ? `${burger.id}-${size}-${addonIds}` : `${burger.id}-${size}`;
+
+  const adicionalesNames = selectedAdicionales.map(a => a.note ? `${a.name} (${a.note})` : a.name);
 
   const existing = cart.find(i => i.cartId === cartId);
   if (existing) {
     existing.qty++;
   } else {
-    cart.push({ cartId, type: 'burger', name: burger.name, size, price, qty: 1 });
+    cart.push({ cartId, type: 'burger', name: burger.name, size, price: totalPrice, adicionales: adicionalesNames, qty: 1 });
   }
 
+  closeBurgerModal();
   updateCart();
-  flashBtn(`addbtn-${burgerId}`, true);
+  flashBtn(`addbtn-${burger.id}`, true);
 }
+
+function closeBurgerModal() {
+  $('burger-modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+  currentModalBurgerId = null;
+}
+
+// ===== CART LOGIC =====
 
 function addItem(type, itemId) {
   const item = MENU[type].find(i => i.id === itemId);
@@ -256,6 +316,7 @@ function updateCart() {
         <div class="cart-item-info">
           <div class="cart-item-name">${item.name}</div>
           ${item.size ? `<div class="cart-item-size">${SIZES[item.size]}</div>` : ''}
+          ${item.adicionales && item.adicionales.length ? `<div class="cart-item-extras">+ ${item.adicionales.join(', ')}</div>` : ''}
           <div class="cart-item-price">${fmt(item.price * item.qty)}</div>
         </div>
         <div class="cart-item-controls">
@@ -297,9 +358,12 @@ function buildMessage() {
 
   if (burgers.length) {
     lines.push('*🍔 HAMBURGUESAS:*');
-    burgers.forEach(i =>
-      lines.push(`• ${i.name} ${SIZES[i.size]} x${i.qty} — ${fmt(i.price * i.qty)}`)
-    );
+    burgers.forEach(i => {
+      lines.push(`• ${i.name} ${SIZES[i.size]} x${i.qty} — ${fmt(i.price * i.qty)}`);
+      if (i.adicionales && i.adicionales.length) {
+        lines.push(`  Extras: ${i.adicionales.join(', ')}`);
+      }
+    });
     lines.push('');
   }
   if (papas.length) {
@@ -362,7 +426,7 @@ function updateOpenStatus() {
 // ===== STICKY NAV ACTIVE SECTION =====
 
 function updateNavActive() {
-  const sections = ['hamburguesas', 'extras', 'adicionales'];
+  const sections = ['hamburguesas', 'extras'];
   const scrollY = window.scrollY + 80;
 
   let current = sections[0];
@@ -389,10 +453,15 @@ document.addEventListener('DOMContentLoaded', () => {
   $('cart-overlay').addEventListener('click', closeCart);
   $('wa-btn').addEventListener('click', sendWhatsApp);
 
+  $('burger-modal-close').addEventListener('click', closeBurgerModal);
+  $('burger-modal-overlay').addEventListener('click', e => {
+    if (e.target === $('burger-modal-overlay')) closeBurgerModal();
+  });
+
   window.addEventListener('scroll', updateNavActive, { passive: true });
 
   // Keyboard close
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') closeCart();
+    if (e.key === 'Escape') { closeCart(); closeBurgerModal(); }
   });
 });
