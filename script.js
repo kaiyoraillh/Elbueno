@@ -239,7 +239,6 @@ function updateCart() {
   if (cart.length === 0) {
     body.innerHTML = `
       <div class="cart-empty-state">
-        <span class="empty-icon">🍔</span>
         <p>Tu pedido está vacío</p>
         <p style="font-weight:600;color:#aaa;font-size:.85rem">¡Elegí algo del menú!</p>
       </div>`;
