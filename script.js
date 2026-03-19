@@ -369,80 +369,12 @@ function updateNavActive() {
   });
 }
 
-// ===== MOBILE LAYOUT =====
-
-function applyMobileStyles() {
-  const isMobile = window.innerWidth <= 768;
-
-  const heroTitle   = document.querySelector('.hero-title');
-  const tEl         = document.querySelector('.t-el');
-  const tBueno      = document.querySelector('.t-bueno');
-  const heroRight   = document.querySelector('.hero-right');
-  const openBadge   = document.querySelector('.open-badge');
-  const heroHours   = document.querySelector('.hero-hours');
-  const heroAddress = document.querySelector('.hero-address');
-
-  if (isMobile) {
-    // Apilar EL / BUENO verticalmente
-    if (heroTitle) {
-      heroTitle.style.flexDirection = 'column';
-      heroTitle.style.lineHeight    = '0.9';
-    }
-    if (tEl)    { tEl.style.fontSize    = '36px'; }
-    if (tBueno) { tBueno.style.fontSize = '36px'; }
-
-    // Contenedor derecho: limitar ancho y evitar desborde
-    if (heroRight) {
-      heroRight.style.paddingLeft  = '8px';
-      heroRight.style.paddingRight = '12px';
-      heroRight.style.maxWidth     = 'calc(50% - 10px)';
-      heroRight.style.overflow     = 'hidden';
-      heroRight.style.boxSizing    = 'border-box';
-    }
-
-    // Badges más chicos y sin desborde
-    [openBadge, heroHours, heroAddress].forEach(el => {
-      if (!el) return;
-      el.style.fontSize   = '9px';
-      el.style.padding    = '2px 6px';
-      el.style.maxWidth   = '100%';
-      el.style.width      = '100%';
-      el.style.boxSizing  = 'border-box';
-      el.style.whiteSpace = 'nowrap';
-      el.style.overflow   = 'hidden';
-      el.style.textOverflow = 'ellipsis';
-    });
-
-  } else {
-    // Restaurar estilos desktop
-    if (heroTitle) { heroTitle.style.flexDirection = ''; heroTitle.style.lineHeight = ''; }
-    if (tEl)    { tEl.style.fontSize    = ''; }
-    if (tBueno) { tBueno.style.fontSize = ''; }
-
-    if (heroRight) {
-      heroRight.style.paddingLeft  = '';
-      heroRight.style.paddingRight = '';
-      heroRight.style.maxWidth     = '';
-      heroRight.style.overflow     = '';
-      heroRight.style.boxSizing    = '';
-    }
-
-    [openBadge, heroHours, heroAddress].forEach(el => {
-      if (!el) return;
-      el.style.fontSize = el.style.padding = el.style.maxWidth =
-      el.style.width = el.style.boxSizing = el.style.whiteSpace =
-      el.style.overflow = el.style.textOverflow = '';
-    });
-  }
-}
-
 // ===== INIT =====
 
 document.addEventListener('DOMContentLoaded', () => {
   renderMenu();
   updateCart();
   updateOpenStatus();
-  applyMobileStyles();
 
   $('cart-nav-btn').addEventListener('click', openCart);
   $('cart-fab').addEventListener('click', openCart);
@@ -451,7 +383,6 @@ document.addEventListener('DOMContentLoaded', () => {
   $('wa-btn').addEventListener('click', sendWhatsApp);
 
   window.addEventListener('scroll', updateNavActive, { passive: true });
-  window.addEventListener('resize', applyMobileStyles, { passive: true });
 
   // Keyboard close
   document.addEventListener('keydown', e => {
