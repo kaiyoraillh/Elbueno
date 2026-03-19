@@ -12,6 +12,7 @@ const MENU = {
       id: 'cheese',
       name: 'Cheese',
       emoji: '🧀',
+      image: 'assets/images%20el%20bueno/1.png',
       desc: 'Carne, queso',
       prices: { simple: 12000, doble: 15000, triple: 17000 },
     },
@@ -19,6 +20,7 @@ const MENU = {
       id: 'clasica',
       name: 'Clásica',
       emoji: '🥬',
+      image: 'assets/images%20el%20bueno/3.png',
       desc: 'Lechuga, tomate, salsa thousand island',
       prices: { simple: 12000, doble: 15000, triple: 17000 },
     },
@@ -26,6 +28,7 @@ const MENU = {
       id: 'cuarto',
       name: 'Cuarto',
       emoji: '🍔',
+      image: 'assets/images%20el%20bueno/5.png',
       desc: 'Ketchup, mostaza, cebolla cruda en cubitos',
       prices: { simple: 12000, doble: 15000, triple: 17000 },
     },
@@ -33,6 +36,7 @@ const MENU = {
       id: 'labuena',
       name: 'La Buena',
       emoji: '⭐',
+      image: 'assets/images%20el%20bueno/2.png',
       desc: 'Panceta, cebolla caramelizada, salsa la buena',
       prices: { simple: 13000, doble: 16000, triple: 18000 },
     },
@@ -40,6 +44,7 @@ const MENU = {
       id: 'oklahoma',
       name: 'Oklahoma',
       emoji: '🔥',
+      image: 'assets/images%20el%20bueno/4.png',
       desc: 'Cebolla smasheada, salsa la buena',
       prices: { simple: 13000, doble: 16000, triple: 18000 },
     },
@@ -47,6 +52,7 @@ const MENU = {
       id: 'bigbuena',
       name: 'Big Buena',
       emoji: '👑',
+      image: 'assets/images%20el%20bueno/6.png',
       desc: 'Lechuga, pickles, salsa big m*c',
       prices: { simple: 13000, doble: 16000, triple: 18000 },
     },
@@ -102,6 +108,7 @@ let cart = [];
 function renderBurgers() {
   $('burgers-grid').innerHTML = MENU.burgers.map(b => `
     <div class="burger-card" id="card-${b.id}">
+      ${b.image ? `<img src="${b.image}" alt="${b.name}" class="burger-img">` : ''}
       <div class="burger-card-top">
         <div class="burger-badges">
           <span class="badge-fries">+ PAPAS FRITAS</span>

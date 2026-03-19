@@ -30,7 +30,7 @@ body {
 }
 
 main {
-  background-color: #ffffff;
+  background-color: #f0eedc;
 }
 
 a { text-decoration: none; }
@@ -373,7 +373,7 @@ button { cursor: pointer; font-family: var(--font-body); }
 }
 
 .burger-card {
-  background: var(--white);
+  background: #f0eedc;
   border: 2px solid var(--black);
   border-top: 5px solid var(--orange);
   border-radius: var(--radius);
@@ -398,6 +398,15 @@ button { cursor: pointer; font-family: var(--font-body); }
 
 .burger-card.featured:hover {
   box-shadow: 6px 6px 0 var(--orange);
+}
+
+.burger-img {
+  width: calc(100% + 2.5rem);
+  margin: -1.25rem -1.25rem 0.75rem -1.25rem;
+  height: 180px;
+  object-fit: cover;
+  border-radius: calc(var(--radius) - 2px) calc(var(--radius) - 2px) 0 0;
+  display: block;
 }
 
 .burger-card-top {
@@ -459,7 +468,7 @@ button { cursor: pointer; font-family: var(--font-body); }
 .size-btn {
   flex: 1;
   padding: 8px 4px;
-  background: var(--off-white);
+  background: #f0eedc;
   border: 2px solid var(--gray);
   border-radius: 8px;
   font-weight: 800;
@@ -531,7 +540,7 @@ button { cursor: pointer; font-family: var(--font-body); }
 }
 
 .item-card {
-  background: var(--white);
+  background: #f0eedc;
   border: 2px solid var(--gray);
   border-left: 4px solid var(--orange);
   border-radius: 10px;
