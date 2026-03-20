@@ -215,7 +215,7 @@ button { cursor: pointer; font-family: var(--font-body); }
     margin: 0 !important;
   }
   .t-el, .t-bueno {
-    font-size: 64px !important;
+    font-size: 88px !important;
     font-weight: 900 !important;
   }
   .hero-meta {

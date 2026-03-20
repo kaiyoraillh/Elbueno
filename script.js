@@ -73,16 +73,16 @@ const MENU = {
     {
       id: 'animals-style',
       name: "Animal's Style",
-      desc: 'Papas, cheddar, cebolla caramelizada y salsa especial',
+      desc: 'Papas, cheddar y panceta',
       price: 8000,
     },
   ],
   bebidas: [
-    { id: 'gaseosa',         name: 'Gaseosa',          price: 3000 },
+    { id: 'gaseosa',         name: 'Gaseosa',          desc: 'Línea Coca-Cola', price: 3000 },
     { id: 'agua',            name: 'Agua',              price: 2500 },
     { id: 'cerveza-chica',   name: 'Cerveza (330ml)',   price: 4000 },
     { id: 'cerveza-grande',  name: 'Cerveza (500ml)',   price: 5000 },
-    { id: 'agua-saborizada', name: 'Agua Saborizada',   price: 3000 },
+    { id: 'agua-saborizada', name: 'Agua Saborizada',   desc: 'Línea Aquarius',  price: 3000 },
   ],
   adicionales: [
     { id: 'extra-carne',  name: 'Extra Carne + Cheddar', price: 4000 },
