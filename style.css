@@ -251,6 +251,11 @@ button { cursor: pointer; font-family: var(--font-body); }
     font-size: 11px;
     padding: 0 0.4rem;
   }
+  .burger-img {
+    width: 200px !important;
+    height: 200px !important;
+    object-fit: contain !important;
+  }
 }
 
 /* ===== FOOD BAND ===== */
@@ -433,98 +438,69 @@ button { cursor: pointer; font-family: var(--font-body); }
 
 /* ===== BURGER CARDS ===== */
 .burgers-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(285px, 1fr));
-  gap: 1rem;
-  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1rem;
 }
 
 .burger-card {
   background: #f0eedc;
-  border: 2px solid var(--black);
-  border-top: 5px solid var(--orange);
-  border-radius: var(--radius);
-  padding: 1.25rem;
+  border: 1.5px solid #b8b4a0;
+  border-radius: 12px;
+  padding: 1rem 1.1rem;
   display: flex;
-  flex-direction: column;
-  gap: 0.65rem;
-  box-shadow: 4px 4px 0 var(--black);
-  transition: transform 0.15s, box-shadow 0.15s;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
 }
 
 .burger-card:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 6px 6px 0 var(--black);
+  border: 2px solid #FF6600;
+  box-shadow: 0 4px 12px rgba(255,102,0,0.12);
 }
 
-.burger-card.featured {
-  border-color: var(--orange);
-  border-top-color: var(--orange);
-  box-shadow: 4px 4px 0 var(--orange);
-}
-
-.burger-card.featured:hover {
-  box-shadow: 6px 6px 0 var(--orange);
+.burger-card-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
 }
 
 .burger-img {
-  width: calc(100% + 2.5rem);
-  margin: -1.25rem -1.25rem 0.75rem -1.25rem;
-  height: 180px;
-  object-fit: cover;
-  border-radius: calc(var(--radius) - 2px) calc(var(--radius) - 2px) 0 0;
+  width: 250px;
+  height: 250px;
+  object-fit: contain;
+  background: #f0eedc;
+  border-radius: 10px;
+  flex-shrink: 0;
   display: block;
-}
-
-.burger-card-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-}
-
-.burger-emoji { font-size: 2.5rem; line-height: 1; }
-
-.burger-badges {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 4px;
-}
-
-.badge-fries {
-  background: var(--orange);
-  color: var(--white);
-  font-size: 0.6rem;
-  font-weight: 900;
-  letter-spacing: 0.5px;
-  padding: 3px 8px;
-  border-radius: 4px;
-}
-
-.badge-special {
-  background: var(--black);
-  color: var(--orange);
-  font-size: 0.6rem;
-  font-weight: 900;
-  letter-spacing: 0.5px;
-  padding: 3px 8px;
-  border-radius: 4px;
 }
 
 .burger-name {
   font-family: var(--font-display);
-  font-size: 1.9rem;
+  font-size: 1.6rem;
   line-height: 1;
   color: var(--black);
   letter-spacing: 0.5px;
 }
 
 .burger-desc {
-  font-size: 0.83rem;
+  font-size: 0.8rem;
   color: var(--gray-dark);
   font-weight: 600;
   line-height: 1.4;
-  flex: 1;
+}
+
+.burger-card-price {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--orange);
+  margin: 0;
 }
 
 .size-selector {
@@ -1259,6 +1235,53 @@ button { cursor: pointer; font-family: var(--font-body); }
   color: var(--gray-dark);
   font-weight: 600;
   text-align: center;
+}
+
+.delivery-selector {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+.delivery-btn {
+  flex: 1;
+  padding: 10px 8px;
+  border: 2px solid #b8b4a0;
+  border-radius: 8px;
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--black);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.delivery-btn.active {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: var(--white);
+}
+.pickup-info {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--gray-dark);
+  margin-bottom: 0.75rem;
+}
+.delivery-address-wrap {
+  margin-bottom: 0.75rem;
+}
+.delivery-address-input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 2px solid #b8b4a0;
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  background: #fff;
+  box-sizing: border-box;
+}
+.delivery-address-input:focus {
+  outline: none;
+  border-color: var(--orange);
 }
 
 .wa-btn {

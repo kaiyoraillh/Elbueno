@@ -20,7 +20,7 @@ const MENU = {
       id: 'clasica',
       name: 'Clásica',
       emoji: '🥬',
-      image: 'assets/images%20el%20bueno/3.png',
+      image: 'assets/images%20el%20bueno/2.png',
       desc: 'Lechuga, tomate, salsa thousand island',
       prices: { simple: 12000, doble: 15000, triple: 17000 },
     },
@@ -28,7 +28,7 @@ const MENU = {
       id: 'cuarto',
       name: 'Cuarto',
       emoji: '🍔',
-      image: 'assets/images%20el%20bueno/5.png',
+      image: 'assets/images%20el%20bueno/3.png',
       desc: 'Ketchup, mostaza, cebolla cruda en cubitos',
       prices: { simple: 12000, doble: 15000, triple: 17000 },
     },
@@ -36,7 +36,7 @@ const MENU = {
       id: 'labuena',
       name: 'La Buena',
       emoji: '⭐',
-      image: 'assets/images%20el%20bueno/2.png',
+      image: 'assets/images%20el%20bueno/4.png',
       desc: 'Panceta, cebolla caramelizada, salsa la buena',
       prices: { simple: 13000, doble: 16000, triple: 18000 },
     },
@@ -44,7 +44,7 @@ const MENU = {
       id: 'oklahoma',
       name: 'Oklahoma',
       emoji: '🔥',
-      image: 'assets/images%20el%20bueno/4.png',
+      image: 'assets/images%20el%20bueno/5.png',
       desc: 'Cebolla smasheada, salsa la buena',
       prices: { simple: 13000, doble: 16000, triple: 18000 },
     },
@@ -103,23 +103,27 @@ function $(id) { return document.getElementById(id); }
 
 // ===== CART STATE =====
 let cart = [];
+let deliveryType = 'pickup';
+
+function setDelivery(type) {
+  deliveryType = type;
+  $('btn-pickup').classList.toggle('active', type === 'pickup');
+  $('btn-delivery').classList.toggle('active', type === 'delivery');
+  $('pickup-info').style.display = type === 'pickup' ? 'block' : 'none';
+  $('delivery-address-wrap').style.display = type === 'delivery' ? 'block' : 'none';
+}
 
 // ===== RENDER MENU =====
 
 function renderBurgers() {
   $('burgers-grid').innerHTML = MENU.burgers.map(b => `
-    <div class="burger-card" id="card-${b.id}">
-      ${b.image ? `<img src="${b.image}" alt="${b.name}" class="burger-img">` : ''}
-      <div class="burger-card-top">
-        <div class="burger-badges">
-          <span class="badge-fries">+ PAPAS FRITAS</span>
-        </div>
+    <div class="burger-card" id="card-${b.id}" onclick="openBurgerModal('${b.id}')">
+      <div class="burger-card-info">
+        <h3 class="burger-name">${b.name}</h3>
+        <p class="burger-desc">${b.desc}</p>
+        <p class="burger-card-price">Desde ${fmt(b.prices.simple)}</p>
       </div>
-      <h3 class="burger-name">${b.name}</h3>
-      <p class="burger-desc">${b.desc}</p>
-      <button class="add-to-cart-btn" id="addbtn-${b.id}" onclick="openBurgerModal('${b.id}')">
-        ＋ AGREGAR AL PEDIDO
-      </button>
+      ${b.image ? `<img src="${b.image}" alt="${b.name}" class="burger-img">` : ''}
     </div>
   `).join('');
 }
@@ -385,7 +389,12 @@ function buildMessage() {
   const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
   lines.push(`*TOTAL: ${fmt(total)}*`);
   lines.push('');
-  lines.push('📦 Retiro en local — Patricios 1715, Maschwitz');
+  if (deliveryType === 'delivery') {
+    const addr = $('delivery-address').value.trim();
+    lines.push(`🛵 *Delivery* — ${addr || 'dirección no indicada'}`);
+  } else {
+    lines.push('🏪 *Retiro en local* — Patricios 1715, Maschwitz');
+  }
 
   if (notes) lines.push(`\n📝 Aclaraciones: ${notes}`);
 
