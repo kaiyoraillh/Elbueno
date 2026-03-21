@@ -240,13 +240,16 @@ function addFromModal() {
 
   closeBurgerModal();
   updateCart();
+  bounceCartIcon();
   flashBtn(`addbtn-${burger.id}`, true);
 }
 
 function closeBurgerModal() {
-  $('burger-modal-overlay').classList.remove('open');
+  const overlay = $('burger-modal-overlay');
+  overlay.classList.add('closing');
   document.body.style.overflow = '';
   currentModalBurgerId = null;
+  setTimeout(() => overlay.classList.remove('open', 'closing'), 250);
 }
 
 // ===== CART LOGIC =====
@@ -263,6 +266,7 @@ function addItem(type, itemId) {
   }
 
   updateCart();
+  bounceCartIcon();
   flashBtn(`addbtn-${type}-${itemId}`, false);
 }
 
@@ -272,6 +276,19 @@ function changeQty(cartId, delta) {
   cart[idx].qty += delta;
   if (cart[idx].qty <= 0) cart.splice(idx, 1);
   updateCart();
+}
+
+// ===== CART ICON BOUNCE =====
+
+function bounceCartIcon() {
+  const btn = $('cart-nav-btn');
+  const count = $('cart-count');
+  btn.classList.remove('bounce');
+  count.classList.remove('count-pop');
+  void btn.offsetWidth; // reflow
+  btn.classList.add('bounce');
+  count.classList.add('count-pop');
+  setTimeout(() => { btn.classList.remove('bounce'); count.classList.remove('count-pop'); }, 420);
 }
 
 // ===== BUTTON FEEDBACK =====
